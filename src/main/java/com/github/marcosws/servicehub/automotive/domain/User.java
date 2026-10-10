@@ -37,6 +37,10 @@ public class User {
 		ROLE_USER
 	}
 	
+	public User() {
+		
+	}
+	
 	public User(String name, String email, String password, Role role) {
 		this.name = name;
 		this.email = email;

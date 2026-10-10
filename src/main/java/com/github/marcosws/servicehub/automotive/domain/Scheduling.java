@@ -41,9 +41,9 @@ public class Scheduling {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private StatusScheduling status = StatusScheduling.PENDING;
+	private SchedulingStatus schedulingStatus = SchedulingStatus.PENDING;
 	
-	public enum StatusScheduling {
+	public enum SchedulingStatus {
 		PENDING,
 		CONFIRMED,
 		IN_PROGRESS,
@@ -102,12 +102,12 @@ public class Scheduling {
 		this.scheduledDateTime = scheduledDateTime;
 	}
 
-	public StatusScheduling getStatus() {
-		return status;
+	public SchedulingStatus getSchedulingStatus() {
+		return this.schedulingStatus;
 	}
 
-	public void setStatus(StatusScheduling status) {
-		this.status = status;
+	public void setSchedulingStatus(SchedulingStatus schedulingStatus) {
+		this.schedulingStatus = schedulingStatus;
 	}
 	
 	@Override

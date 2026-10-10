@@ -1,3 +1,36 @@
 spring:
   application:
     name: service-hub
+
+  # Habilita Virtual Threads nativas do Java 21 no Spring Boot
+  threads:
+    virtual:
+      enabled: true
+
+# Banco de Dados em memória para Dev/Testes
+  datasource:
+    url: jdbc:h2:mem:automotive_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: admpass
+
+# Console do H2 (Acessível em http://localhost:8080/h2-console)
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+# Configurações do Hibernate / JPA
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format-sql: true
+
+# Configurações de Segurança / JWT
+jwt:
+  secret: 404E635266556A586E3272357538782F413F4428472B4B6250655368566D5971
+  expiration: 86400000 # 24 horas em milissegundos

@@ -14,12 +14,12 @@ public interface SchedulingRepository extends JpaRepository<Scheduling, Long> {
 	boolean existsByVehicleIdAndScheduledDateTimeAndStatusNot(
 			Long vehicleId, 
 			LocalDateTime scheduledDateTime,
-			Scheduling.StatusScheduling status
+			Scheduling.SchedulingStatus schedulingStatus
 	);
 	
 	long countByScheduledDateTimeBetweenAndStatusNot(
-			LocalDateTime start,  
-			Scheduling.StatusScheduling status
+			LocalDateTime scheduledDateTime,  
+			Scheduling.SchedulingStatus schedulingStatus
 	);
 
 }

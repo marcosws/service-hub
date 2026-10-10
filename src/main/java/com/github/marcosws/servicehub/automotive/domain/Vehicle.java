@@ -29,7 +29,7 @@ public class Vehicle {
 	@Column(nullable = false)
 	private String model;
 	
-	@Column(nullable = false)
+	@Column(name = "year_vehicle", nullable = false)
 	private Integer year;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
