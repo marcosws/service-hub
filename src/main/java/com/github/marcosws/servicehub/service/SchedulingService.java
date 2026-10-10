@@ -115,7 +115,7 @@ public class SchedulingService {
 	}
 	
 	private void validateExistingAppointmentForVehicle(Long vehicleId, LocalDateTime dateTime) {
-		boolean schedulingExists = schedulingRepository.existsByVehicleIdAndScheduledDateTimeAndStatusNot(
+		boolean schedulingExists = schedulingRepository.existsByVehicleIdAndScheduledDateTimeAndSchedulingStatusNot(
                 vehicleId,
                 dateTime,
                 Scheduling.SchedulingStatus.CANCELED
@@ -128,7 +128,7 @@ public class SchedulingService {
 	}
 	
 	private void validateWorkshopCapacity(LocalDateTime dateTime) {
-		long schedulingInHour = schedulingRepository.countByScheduledDateTimeBetweenAndStatusNot(
+		long schedulingInHour = schedulingRepository.countByScheduledDateTimeBetweenAndSchedulingStatusNot(
 				dateTime, 
 				Scheduling.SchedulingStatus.CANCELED
 				);

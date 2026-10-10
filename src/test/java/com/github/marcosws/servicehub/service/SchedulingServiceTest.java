@@ -92,8 +92,8 @@ public class SchedulingServiceTest {
 		when(userRepository.findById(1L)).thenReturn(Optional.of(client));
 		when(vehicleRepository.findById(vehicle.getId())).thenReturn(Optional.of(vehicle));
 		when(automotiveOfferingRepository.findById(service.getId())).thenReturn(Optional.of(service));
-		when(schedulingRepository.existsByVehicleIdAndScheduledDateTimeAndStatusNot(any(), any(), any())).thenReturn(false);
-		when(schedulingRepository.countByScheduledDateTimeBetweenAndStatusNot(any(), any())).thenReturn(0L);
+		when(schedulingRepository.existsByVehicleIdAndScheduledDateTimeAndSchedulingStatusNot(any(), any(), any())).thenReturn(false);
+		when(schedulingRepository.countByScheduledDateTimeBetweenAndSchedulingStatusNot(any(), any())).thenReturn(0L);
 		
 		when(schedulingRepository.save(any(Scheduling.class))).thenAnswer(invocation -> {
 			Scheduling scheduling = invocation.getArgument(0);
@@ -142,8 +142,8 @@ public class SchedulingServiceTest {
 		when(userRepository.findById(1L)).thenReturn(Optional.of(client));
 		when(vehicleRepository.findById(vehicle.getId())).thenReturn(Optional.of(vehicle));
 		when(automotiveOfferingRepository.findById(service.getId())).thenReturn(Optional.of(service));
-		when(schedulingRepository.existsByVehicleIdAndScheduledDateTimeAndStatusNot(any(), any(), any())).thenReturn(false);
-		when(schedulingRepository.countByScheduledDateTimeBetweenAndStatusNot(any(), any())).thenReturn(3L); // Capacidade máxima atingida
+		when(schedulingRepository.existsByVehicleIdAndScheduledDateTimeAndSchedulingStatusNot(any(), any(), any())).thenReturn(false);
+		when(schedulingRepository.countByScheduledDateTimeBetweenAndSchedulingStatusNot(any(), any())).thenReturn(3L); // Capacidade máxima atingida
 		
 		BusinessRulesException exception = assertThrows(BusinessRulesException.class, () -> {
 			schedulingService.createScheduling(client.getId(), request);
