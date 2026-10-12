@@ -24,7 +24,8 @@ public interface SchedulingRepository extends JpaRepository<Scheduling, Long> {
 	);
 	
 	@Query("SELECT COUNT(s) FROM Scheduling s " +
-		       "WHERE s.scheduledDateTime BETWEEN :startDateTime AND :endDateTime " +
+		       "WHERE s.scheduledDateTime >= :startDateTime " +
+		       "AND s.scheduledDateTime < :endDateTime " +
 		       "AND s.schedulingStatus <> :schedulingStatus")
 		Long countByScheduledDateTimeBetweenAndSchedulingStatusNot(
 		        @Param("startDateTime") LocalDateTime startDateTime,

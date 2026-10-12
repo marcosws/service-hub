@@ -121,9 +121,9 @@ public class SchedulingControllerIntegrationTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(requestDto)))
 		.andExpect(status().isCreated())
-		.andExpect(jsonPath("$.clientId").exists())
+		.andExpect(jsonPath("$.id").exists())
 		.andExpect(jsonPath("$.clientName").value("John Doe"))
-		.andExpect(jsonPath("$.serviceService").value("Oil Change"))
+		.andExpect(jsonPath("$.serviceName").value("Oil Change"))
 		.andExpect(jsonPath("$.status").value("PENDING"));
 				
 		

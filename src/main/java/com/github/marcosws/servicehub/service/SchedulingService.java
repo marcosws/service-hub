@@ -3,6 +3,7 @@ package com.github.marcosws.servicehub.service;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -128,14 +129,18 @@ public class SchedulingService {
 	}
 	
 	private void validateWorkshopCapacity(LocalDateTime dateTime) {
-		long schedulingInHour = schedulingRepository.countByScheduledDateTimeBetweenAndSchedulingStatusNot(
-				dateTime, 
-				Scheduling.SchedulingStatus.CANCELED
-				);
+		LocalDateTime startOfHour = dateTime.truncatedTo(ChronoUnit.HOURS);
+		LocalDateTime endOfHour = startOfHour.plusHours(1);
 
-        if (schedulingInHour >= MAXIMUM_SIMULTANEOUS_CAPACITY) {
-            throw new BusinessRulesException("A oficina atingiu a capacidade máxima de atendimentos para este horário.");
-        }
+		long schedulingInHour = schedulingRepository.countByScheduledDateTimeBetweenAndSchedulingStatusNot(
+				startOfHour,
+				endOfHour,
+				Scheduling.SchedulingStatus.CANCELED
+		);
+
+		if (schedulingInHour >= MAXIMUM_SIMULTANEOUS_CAPACITY) {
+			throw new BusinessRulesException("A oficina atingiu a capacidade máxima de atendimentos para este horário.");
+		}
 		
 	}
 	
