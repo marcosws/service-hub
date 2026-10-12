@@ -129,10 +129,4 @@ public class SchedulingControllerIntegrationTest {
 		
 	}
 	
-	
-	
-	
-	
-	
-
 }
