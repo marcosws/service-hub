@@ -72,7 +72,7 @@ public class SchedulingService {
 	
 	
 	@Transactional
-    public void cancelarAgendamento(Long agendamentoId, Long clienteId) {
+    public void cancelScheduling(Long agendamentoId, Long clienteId) {
         Scheduling scheduling = schedulingRepository.findById(agendamentoId)
                 .orElseThrow(() -> new BusinessRulesException("Agendamento não encontrado."));
 
@@ -92,7 +92,7 @@ public class SchedulingService {
     }
 
     @Transactional(readOnly = true)
-    public List<SchedulingResponseDto> listarAgendamentosDoCliente(Long clientId) {
+    public List<SchedulingResponseDto> listCustomerScheduling(Long clientId) {
         return schedulingRepository.findByClientId(clientId)
                 .stream()
                 .map(this::mapperForDto)

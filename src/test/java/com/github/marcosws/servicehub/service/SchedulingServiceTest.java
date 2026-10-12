@@ -128,7 +128,7 @@ public class SchedulingServiceTest {
 			schedulingService.createScheduling(client.getId(), request);
 		});
 		
-		assertEquals("Agendamentos só podem ser feitos de segunda a sexta-feira, das 8h às 18h.", exception.getMessage());
+		assertEquals("O horário do agendamento deve estar entre 08:00 e 18:00.", exception.getMessage());
 		verify(schedulingRepository, times(0)).save(any(Scheduling.class));
 
 	}
