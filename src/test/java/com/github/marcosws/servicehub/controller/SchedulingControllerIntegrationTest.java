@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +29,7 @@ import com.github.marcosws.servicehub.repository.AutomotiveOfferingRepository;
 import com.github.marcosws.servicehub.repository.SchedulingRepository;
 import com.github.marcosws.servicehub.repository.UserRepository;
 import com.github.marcosws.servicehub.repository.VehicleRepository;
+import com.github.marcosws.servicehub.security.JwtService;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -36,8 +38,6 @@ public class SchedulingControllerIntegrationTest {
 	
 	@Autowired
 	private MockMvc mockMvc;
-	
-	private ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -51,11 +51,16 @@ public class SchedulingControllerIntegrationTest {
 	@Autowired
 	private SchedulingRepository schedulingRepository;
 	
+    @Autowired
+    private JwtService jwtService; // Injetamos o JwtService para gerar o token nos testes
+	
+	private ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 	
 	private User savedUser;
 	private Vehicle savedVehicle;
 	private AutomotiveOffering savedService;
 	private LocalDateTime validDateTime;
+    private String tokenJwt;
 	
 	
 	@BeforeEach
@@ -70,9 +75,12 @@ public class SchedulingControllerIntegrationTest {
 		User user = new User();
 		user.setName("John Doe");
 		user.setEmail("johndoe@gmail.com");
-		user.setPassword("123456");
+		user.setPassword(new BCryptPasswordEncoder().encode("123456"));
 		user.setRole(User.Role.ROLE_USER);
 		savedUser = userRepository.save(user);
+		
+        // Gera o token JWT válido programaticamente para este usuário nos testes
+        tokenJwt = jwtService.generateToken(savedUser);
 		
 		Vehicle vehicle = new Vehicle();
 		vehicle.setOwner(savedUser);
@@ -108,6 +116,7 @@ public class SchedulingControllerIntegrationTest {
 		);
 		
 		mockMvc.perform(post("/api/schedulings")
+				.header("Authorization", "Bearer " + tokenJwt) // <--- Envio do token JWT no cabeçalho
 				.param("clientId", savedUser.getId().toString())
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(requestDto)))
