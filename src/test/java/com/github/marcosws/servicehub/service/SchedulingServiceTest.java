@@ -23,7 +23,7 @@ import com.github.marcosws.servicehub.automotive.domain.AutomotiveOffering;
 import com.github.marcosws.servicehub.automotive.domain.Scheduling;
 import com.github.marcosws.servicehub.automotive.domain.User;
 import com.github.marcosws.servicehub.automotive.domain.Vehicle;
-import com.github.marcosws.servicehub.automotive.dto.Dtos.SchedulingRequestDto;
+import com.github.marcosws.servicehub.automotive.dto.SchedulingDtos.SchedulingRequestDto;
 import com.github.marcosws.servicehub.exception.BusinessRulesException;
 import com.github.marcosws.servicehub.repository.AutomotiveOfferingRepository;
 import com.github.marcosws.servicehub.repository.SchedulingRepository;

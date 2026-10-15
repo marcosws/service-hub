@@ -2,7 +2,7 @@ package com.github.marcosws.servicehub.automotive.dto;
 
 import java.time.LocalDateTime;
 
-public class Dtos {
+public class SchedulingDtos {
 	
 	
 	public record SchedulingRequestDto(
@@ -20,16 +20,5 @@ public class Dtos {
 			LocalDateTime scheduledDateTime,
 			String status
 	) {}
-	
-	public record LoginRequestDto(
-			String email,
-			String password
-	) {}
-	
-	public record TokenResponseDto(
-			String token,
-			String type
-	) {}
-	
 
 }

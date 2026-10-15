@@ -14,7 +14,6 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -80,14 +79,16 @@ public class VehicleControllerIntegrationTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(vehicleRequest)))
 	        .andExpect(status().isCreated())
-	        .andExpect((ResultMatcher) jsonPath("$.id").exists())
-	        .andExpect((ResultMatcher) jsonPath("$.plate").value("ABC-1234"))
-	        .andExpect((ResultMatcher) jsonPath("$.brand").value("Toyota"))
-	        .andExpect((ResultMatcher) jsonPath("$.model").value("Corolla"))
-	        .andExpect((ResultMatcher) jsonPath("$.ownerName").value("Jhon Doe"));
+	        .andExpect(jsonPath("$.id").exists())
+	        .andExpect(jsonPath("$.plate").value("ABC-1234"))
+	        .andExpect(jsonPath("$.brand").value("Toyota"))
+	        .andExpect(jsonPath("$.model").value("Corolla"))
+	        .andExpect(jsonPath("$.ownerName").value("Jhon Doe"));
 		
 	}
     
+    @Test
+    @DisplayName("Deve listar os veículos de um cliente específico com sucesso")
     void shouldListVehiclesByClientIdWithSuccessfully() throws Exception {
     	
         Vehicle vehicle = new Vehicle();
@@ -96,23 +97,14 @@ public class VehicleControllerIntegrationTest {
         vehicle.setModel("Onix");
         vehicle.setYear(2023);
         vehicle.setOwner(savedUser);
-        vehicleRepository.save(vehicle);
+        vehicleRepository.saveAndFlush(vehicle);
     	
         mockMvc.perform(get("/api/vehicles/client/" + savedUser.getId())
                 .header("Authorization", "Bearer " + jwtToken)) // <--- Envio do Token JWT
         .andExpect(status().isOk())
-        .andExpect((ResultMatcher) jsonPath("$[0].id").exists())
-        .andExpect((ResultMatcher) jsonPath("$[0].plate").value("XYZ-9876"))
-        .andExpect((ResultMatcher) jsonPath("$[0].model").value("Onix"));
+        .andExpect(jsonPath("$[0].id").exists())
+        .andExpect(jsonPath("$[0].plate").value("XYZ-9876"))
+        .andExpect(jsonPath("$[0].model").value("Onix"));
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

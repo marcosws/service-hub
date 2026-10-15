@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
-import com.github.marcosws.servicehub.automotive.dto.Dtos.SchedulingRequestDto;
-import com.github.marcosws.servicehub.automotive.dto.Dtos.SchedulingResponseDto;
+import com.github.marcosws.servicehub.automotive.dto.SchedulingDtos.SchedulingRequestDto;
+import com.github.marcosws.servicehub.automotive.dto.SchedulingDtos.SchedulingResponseDto;
 import com.github.marcosws.servicehub.service.SchedulingService;
 
 
