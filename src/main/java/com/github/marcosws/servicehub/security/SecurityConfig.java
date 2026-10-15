@@ -40,6 +40,11 @@ public class SecurityConfig {
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(auth -> auth
 					.requestMatchers("/api/auth/**", "/h2-console/**").permitAll() // Rotas públicas de login/cadastro e console H2
+					.requestMatchers(
+						    "/v3/api-docs/**",
+						    "/swagger-ui/**",
+						    "/swagger-ui.html"
+						).permitAll()
 	                .anyRequest().authenticated() // Demais rotas exigem token JWT
 		            )
 		            .headers(headers -> headers.frameOptions(frame -> frame.disable())) // Necessário para exibir o console H2 em iframe
