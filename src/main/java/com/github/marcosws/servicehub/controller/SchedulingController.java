@@ -43,15 +43,15 @@ public class SchedulingController {
 	
 	@PostMapping
     @Operation(
-            summary = "Criar novo agendamento",
-            description = "Agenda um serviço automotivo para um veículo e cliente específicos, validando disponibilidade. Requer token JWT.",
-            security = @SecurityRequirement(name = "bearerAuth")
+	    summary = "Criar novo agendamento",
+	    description = "Agenda um serviço automotivo para um veículo e cliente específicos, validando disponibilidade. Requer token JWT.",
+	    security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Agendamento criado com sucesso", 
-                content = @Content(schema = @Schema(implementation = SchedulingResponseDto.class))),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos, conflito de horário ou entidades não encontradas"),
-            @ApiResponse(responseCode = "401", description = "Token JWT ausente ou inválido")
+	    @ApiResponse(responseCode = "201", description = "Agendamento criado com sucesso", 
+	    		content = @Content(schema = @Schema(implementation = SchedulingResponseDto.class))),
+	    @ApiResponse(responseCode = "400", description = "Dados inválidos, conflito de horário ou entidades não encontradas"),
+	    @ApiResponse(responseCode = "401", description = "Token JWT ausente ou inválido")
     })
 	public ResponseEntity<SchedulingResponseDto> createScheduling(
 			@RequestParam Long clientId,
@@ -63,16 +63,16 @@ public class SchedulingController {
 	
 	@GetMapping("/client/{clientId}")
 	@Operation(
-	        summary = "Listar agendamentos do cliente",
-	        description = "Retorna todos os agendamentos vinculados a um cliente específico informado na URL. Requer token JWT.",
-	        security = @SecurityRequirement(name = "bearerAuth")
-	    )
-	    @ApiResponses(value = {
-	        @ApiResponse(responseCode = "200", description = "Lista recuperada com sucesso", 
-	            content = @Content(array = @ArraySchema(schema = @Schema(implementation = SchedulingResponseDto.class)))),
-	        @ApiResponse(responseCode = "401", description = "Token JWT ausente ou inválido"),
-	        @ApiResponse(responseCode = "404", description = "Cliente não encontrado")
-	    })
+		summary = "Listar agendamentos do cliente",
+		description = "Retorna todos os agendamentos vinculados a um cliente específico informado na URL. Requer token JWT.",
+		security = @SecurityRequirement(name = "bearerAuth")
+	)
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "Lista recuperada com sucesso", 
+		content = @Content(array = @ArraySchema(schema = @Schema(implementation = SchedulingResponseDto.class)))),
+		@ApiResponse(responseCode = "401", description = "Token JWT ausente ou inválido"),
+		@ApiResponse(responseCode = "404", description = "Cliente não encontrado")
+	})
 	public ResponseEntity<List<SchedulingResponseDto>> listForClient(@PathVariable Long clientId) {
 		List<SchedulingResponseDto> schedulings = schedulingService.listCustomerScheduling(clientId);
 		return ResponseEntity.ok(schedulings);
@@ -81,16 +81,16 @@ public class SchedulingController {
 	
 	@PatchMapping("{id}/cancel")
 	@Operation(
-	        summary = "Cancelar agendamento",
-	        description = "Altera o status de um agendamento específico para cancelado. Requer token JWT.",
-	        security = @SecurityRequirement(name = "bearerAuth")
-	    )
-	    @ApiResponses(value = {
-	        @ApiResponse(responseCode = "204", description = "Agendamento cancelado com sucesso"),
-	        @ApiResponse(responseCode = "400", description = "Requisição inválida ou agendamento não pode ser cancelado"),
-	        @ApiResponse(responseCode = "401", description = "Token JWT ausente ou inválido"),
-	        @ApiResponse(responseCode = "404", description = "Agendamento ou cliente não encontrado")
-	    })
+		summary = "Cancelar agendamento",
+		description = "Altera o status de um agendamento específico para cancelado. Requer token JWT.",
+		security = @SecurityRequirement(name = "bearerAuth")
+	)
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "204", description = "Agendamento cancelado com sucesso"),
+		@ApiResponse(responseCode = "400", description = "Requisição inválida ou agendamento não pode ser cancelado"),
+		@ApiResponse(responseCode = "401", description = "Token JWT ausente ou inválido"),
+		@ApiResponse(responseCode = "404", description = "Agendamento ou cliente não encontrado")
+	})
 	public ResponseEntity<Void> cancelScheduling(@PathVariable Long clientId, @RequestParam Long schedulingId) {
 		schedulingService.cancelScheduling(clientId, schedulingId);
 		return ResponseEntity.noContent().build();
