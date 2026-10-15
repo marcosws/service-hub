@@ -38,15 +38,15 @@ public class VehicleController {
 	
 	@PostMapping
 	@Operation(
-			summary = "Cadastrar novo veículo",
-			description = "Associa um novo veículo a um cliente existente no sistema. Requer autenticação JWT.",
-			security = @SecurityRequirement(name = "bearerAuth")
+		summary = "Cadastrar novo veículo",
+		description = "Associa um novo veículo a um cliente existente no sistema. Requer autenticação JWT.",
+		security = @SecurityRequirement(name = "bearerAuth")
 	)
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "201", description = "Veículo cadastrado com sucesso", 
-		       content = @Content(schema = @Schema(implementation = VehicleResponseDto.class))),
-			@ApiResponse(responseCode = "400", description = "Dados inválidos ou proprietário não encontrado"),
-			@ApiResponse(responseCode = "401", description = "Token JWT ausente ou inválido")
+		@ApiResponse(responseCode = "201", description = "Veículo cadastrado com sucesso", 
+				content = @Content(schema = @Schema(implementation = VehicleResponseDto.class))),
+		@ApiResponse(responseCode = "400", description = "Dados inválidos ou proprietário não encontrado"),
+		@ApiResponse(responseCode = "401", description = "Token JWT ausente ou inválido")
 	})
 	public ResponseEntity<VehicleResponseDto> registerVehicle(@Valid @RequestBody VehicleRequestDto request){
 		VehicleResponseDto response = vehicleService.registerVehicle(request);
@@ -55,14 +55,14 @@ public class VehicleController {
 	
 	@GetMapping("/client/{clientId}")
 	@Operation(
-			summary = "Listar veículos por cliente",
-			description = "Retorna todos os veículos pertencentes a um cliente específico com base no ID do usuário.",
-			security = @SecurityRequirement(name = "bearerAuth")
+		summary = "Listar veículos por cliente",
+		description = "Retorna todos os veículos pertencentes a um cliente específico com base no ID do usuário.",
+		security = @SecurityRequirement(name = "bearerAuth")
 	)
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Lista recuperada com sucesso", 
-					content = @Content(array = @ArraySchema(schema = @Schema(implementation = VehicleResponseDto.class)))),
-			@ApiResponse(responseCode = "401", description = "Não autorizado")
+		@ApiResponse(responseCode = "200", description = "Lista recuperada com sucesso", 
+				content = @Content(array = @ArraySchema(schema = @Schema(implementation = VehicleResponseDto.class)))),
+		@ApiResponse(responseCode = "401", description = "Não autorizado")
 	})
 	public ResponseEntity<List<VehicleResponseDto>> getVehiclesByClientId(@PathVariable Long clientId) {
         List<VehicleResponseDto> vehicles = vehicleService.findVehiclesByClientId(clientId);
